@@ -1,0 +1,6 @@
+{
+  "routes": [
+    { "src": "/w/(.*)", "dest": "/work?slug=$1" },
+    { "src": "/", "dest": "/index" }
+  ]
+}
