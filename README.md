@@ -95,3 +95,19 @@ const customRoutes = require('./customRoutes')
 routesMiddleware({server, app}, customRoutes)
 ```
 
+## Usage with next/link and styled-components for client-side routing
+
+
+```js
+import Link from 'next/link'
+import styled from 'styled-components'
+
+const NavBarLink = styled.a`
+ text-decoration: none;
+ color: rgb(209, 72, 54);
+`
+
+<Link as={`/w/test`} href={`/work?slug=test`}>
+  <NavBarLink>WORK</NavBarLink>
+</Link>
+```
