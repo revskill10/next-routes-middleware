@@ -15,7 +15,9 @@ function _defaultRoutes(additionRoutes) {
 }
 
 const _nextRoutes = require.main.require('./now.dev.json');
-function routesMiddleware({server, app, dev}, defaultRoutes = _defaultRoutes, nextRoutes = _nextRoutes) {
+function routesMiddleware({server, app}, defaultRoutes = _defaultRoutes, nextRoutes = _nextRoutes) {
+  const dev = process.env.NODE_ENV !== 'production';
+
   let additionalRoutes = {}
   nextRoutes.routes.forEach(function(item) {
     additionalRoutes[item.src] = function({app, req, res, query}) {

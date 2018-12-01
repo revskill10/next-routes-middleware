@@ -35,7 +35,7 @@ const port = parseInt(process.env.PORT, 10) || 3000
 
 app.prepare().then(() => {
   const server = express()
-  routesMiddleware({server, app, dev})
+  routesMiddleware({server, app})
   server.listen(port, (err) => {
     if (err) throw err
     console.log(`> Ready on http://localhost:${port}`)
