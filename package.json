@@ -1,6 +1,6 @@
 {
   "name": "next-routes-middleware",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Express middleware for Next.js dynamic routes",
   "main": "index.js",
   "scripts": {
