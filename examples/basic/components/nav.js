@@ -17,7 +17,7 @@ const Nav = () => (
         </Link>
       </li>
       <li>
-        <Link prefetch href="/work?slug=test" as="/w/test">
+        <Link prefetch href="/w/test">
           <a>Work</a>
         </Link>
       </li>
