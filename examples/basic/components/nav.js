@@ -1,5 +1,36 @@
 import React from 'react'
 import Link from 'next/link'
+import styled from 'styled-components'
+import mkLink from '../../../get-client-link'
+import config from '../now.dev.json'
+const getClientLink = mkLink(config)
+
+const NextLink = ({href, className, children, ...rest}) => {
+  const as = getClientLink(href)
+  return <Link href={as} as={href} {...rest}>
+    <a className={className} href={as}>{children}</a>
+  </Link>
+}
+
+const StyledLink = styled(NextLink)`
+  color: #067df7;
+  text-decoration: none;
+  font-size: 13px;
+`
+
+const Nav = styled.nav`
+  text-align: center;
+`
+
+const Ul = styled.ul`  
+  padding: 4px 16px;
+  display: flex;
+  justify-content: space-between;
+`
+const Li = styled.li`
+  display: flex;
+  padding: 6px 8px;
+`
 
 const links = [
   { href: 'https://github.com/segmentio/create-next-app', label: 'Github' },
@@ -8,67 +39,32 @@ const links = [
   return link
 })
 
-const Nav = () => (
-  <nav>
-    <ul>
-      <li>
-        <Link prefetch href="/">
-          <a>Home</a>
-        </Link>
-      </li>
-      <li>
-        <Link prefetch href="/work?slug=test" as="/w/test">
-          <a>Work</a>
-        </Link>
-      </li>
-      <li>
-        <Link prefetch as="/resource/202eb9d7-feb3-407c-922e-e749159cb3ec" href="/complex?id=202eb9d7-feb3-407c-922e-e749159cb3ec">
-          <a>Resource</a>
-        </Link>
-      </li>
-      <li>
-        <Link prefetch as="/t/hello-world/1999-12-31" href="/more_complex?day=31&month=12&year=1999&slug=hello-world">
-          <a>More resource</a>
-        </Link>
-      </li>
-      <ul>
+const NavBar = () => (
+  <Nav>
+    <Ul>
+      <Li>
+        <StyledLink prefetch passHref href="/">
+          Home
+        </StyledLink>
+      </Li>
+      <Li>
+        <StyledLink href='/w/test' passHref>Work</StyledLink>
+      </Li>
+      <Li>
+        <StyledLink prefetch href="/resource/202eb9d7-feb3-407c-922e-e749159cb3ec" passHref>Resource</StyledLink>
+      </Li>
+      <Li>
+        <StyledLink prefetch href="/t/hello-world/1999-12-31" passHref>More resource</StyledLink>
+      </Li>
+      <Ul>
         {links.map(({ key, href, label }) => (
-          <li key={key}>
-            <Link href={href}>
-              <a>{label}</a>
-            </Link>
-          </li>
+          <Li key={key}>
+            <StyledLink href={href}>{label}</StyledLink>
+          </Li>
         ))}
-      </ul>
-    </ul>
-
-    <style jsx>{`
-      :global(body) {
-        margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, Avenir Next, Avenir,
-          Helvetica, sans-serif;
-      }
-      nav {
-        text-align: center;
-      }
-      ul {
-        display: flex;
-        justify-content: space-between;
-      }
-      nav > ul {
-        padding: 4px 16px;
-      }
-      li {
-        display: flex;
-        padding: 6px 8px;
-      }
-      a {
-        color: #067df7;
-        text-decoration: none;
-        font-size: 13px;
-      }
-    `}</style>
-  </nav>
+      </Ul>
+    </Ul>
+  </Nav>
 )
 
-export default Nav
+export default NavBar

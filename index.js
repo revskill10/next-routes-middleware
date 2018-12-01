@@ -4,7 +4,7 @@ const pathMatch = require('path-match')
 const route = pathMatch()
 const url = require('url')
 var XRegExp = require('xregexp');
-const {inspect} = require('util')
+const stringInject = require('stringinject').default
 
 function _defaultRoutes(additionRoutes) {
   return {
@@ -14,18 +14,20 @@ function _defaultRoutes(additionRoutes) {
     },
   }
 }
-function name(str,replaceWhat,replaceTo){
-  replaceWhat = replaceWhat.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-  var re = new RegExp(replaceWhat, 'g');
-  return str.replace(re,replaceTo);
-}
+
 const _nextRoutes = require.main.require('./now.dev.json');
 function routesMiddleware({server, app}, defaultRoutes = _defaultRoutes, nextRoutes = _nextRoutes) {
   const dev = process.env.NODE_ENV !== 'production';
-
+  const patterns = nextRoutes.patterns
+  const modifiedRoutes = nextRoutes.routes.map(function(item) {
+    const tmpSrc = stringInject(item.src, patterns).replace(/\$/g, "")
+    return {
+      src: tmpSrc,
+      dest: item.dest
+    }
+  })
   let additionalRoutes = {}
-  nextRoutes.routes.forEach(function(item) {
-    console.log(inspect(item))
+  modifiedRoutes.forEach(function(item) {
     additionalRoutes[item.src] = function({app, req, res, query, pattern}) {
       const resultUrl = XRegExp.replace(req.url, pattern, item.dest)
       const additionalParams = url.parse(resultUrl, true)

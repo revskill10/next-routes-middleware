@@ -1,6 +1,6 @@
 {
   "name": "next-routes-middleware",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Express middleware for Next.js dynamic routes",
   "main": "index.js",
   "scripts": {
@@ -11,6 +11,7 @@
   "dependencies": {
     "mobile-detect": "1.4.3",
     "path-match": "1.2.4",
+    "stringinject": "^2.1.1",
     "xregexp": "^4.2.0"
   },
   "repository": {
