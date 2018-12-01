@@ -2,6 +2,12 @@
 
 Extensible, customizable Next.JS routes middleware
 
+## Installation
+
+```
+npm i --save next-routes-middleware
+```
+
 ## Usage
 
 Step 1: Create a default routes (`defaultRoutes.js`):
