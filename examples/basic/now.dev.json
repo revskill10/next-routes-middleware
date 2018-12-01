@@ -1,6 +1,17 @@
 {
   "routes": [
-    { "src": "/w/(.*)", "dest": "/work?slug=$1" },
+    { 
+      "src": "/w/(.*)", 
+      "dest": "/work?slug=$1" 
+    },
+    { 
+      "src": "/resource/(?<id>[^/]*)", 
+      "dest": "/complex?id=${id}" 
+    },
+    { 
+      "src": "/t/(?<slug>[^/]*)/(?<year>[0-9]{4})-(?<month>[0-9]{2})-(?<day>[0-9]{2})", 
+      "dest": "/more_complex?day=${day}&month=${month}&year=${year}&slug=${slug}" 
+    },
     { "src": "/", "dest": "/index" }
   ]
 }

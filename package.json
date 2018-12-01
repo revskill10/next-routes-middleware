@@ -11,7 +11,8 @@
   "dependencies": {
     "mobile-detect": "1.4.3",
     "path-match": "1.2.4",
-    "path-to-regexp": "2.4.0"
+    "route-parser": "0.0.5",
+    "xregexp": "^4.2.0"
   },
   "repository": {
     "type": "git",

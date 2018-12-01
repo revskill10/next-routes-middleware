@@ -9,7 +9,9 @@
     "express": "^4.16.4",
     "next": "^7.0.2",
     "next-routes-middleware": "^1.0.1",
+    "query-string": "^6.2.0",
     "react": "^16.6.3",
-    "react-dom": "^16.6.3"
+    "react-dom": "^16.6.3",
+    "xregexp": "^4.2.0"
   }
 }

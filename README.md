@@ -13,10 +13,20 @@ npm i --save next-routes-middleware
 Step 1: Create your own `now.dev.json`:
 
 ```json
-
 {
   "routes": [
-    { "src": "/w/(.*)", "dest": "/work?slug=$1" },
+    { 
+      "src": "/w/(.*)", 
+      "dest": "/work?slug=$1" 
+    },
+    { 
+      "src": "/resource/(?<id>[^/]*)", 
+      "dest": "/complex?id=${id}" 
+    },
+    { 
+      "src": "/t/(?<slug>[^/]*)/(?<year>[0-9]{4})-(?<month>[0-9]{2})-(?<day>[0-9]{2})", 
+      "dest": "/more_complex?day=${day}&month=${month}&year=${year}&slug=${slug}" 
+    },
     { "src": "/", "dest": "/index" }
   ]
 }
@@ -64,12 +74,6 @@ function customRoutes(nextRoutes) {
     '/static/wasm/*': function({app, req, res, next, handle, pathname}) {
       res.setHeader('Content-Type', 'application/wasm')
       handle(req, res, parsedUrl)
-    },
-    
-    '/w/:slug': function({app, req, res, query, params}) {
-      const {slug} = params
-      console.log(`hello ${slug}`)
-      app.render(req, res, '/work', {...params, ...query})
     },    
     '/': function({app, req, res, isMobile, query}) {
       if (!isMobile) {
@@ -79,7 +83,7 @@ function customRoutes(nextRoutes) {
       }
     },    
     ...nextRoutes,
-    '/*': function({handle, req, res, parsedUrl}) {
+    '*': function({handle, req, res, parsedUrl}) {
       handle(req, res, parsedUrl)
     },
   }

@@ -17,8 +17,18 @@ const Nav = () => (
         </Link>
       </li>
       <li>
-        <Link prefetch href="/w/test">
+        <Link prefetch href="/work?slug=test" as="/w/test">
           <a>Work</a>
+        </Link>
+      </li>
+      <li>
+        <Link prefetch as="/resource/test" href="/complex?id=test">
+          <a>Resource</a>
+        </Link>
+      </li>
+      <li>
+        <Link prefetch as="/t/hello-world/1999-12-31" href="/more_complex?day=31&month=12&year=1999&slug=hello-world">
+          <a>More resource</a>
         </Link>
       </li>
       <ul>

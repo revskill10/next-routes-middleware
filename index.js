@@ -2,8 +2,9 @@ const { parse } = require('url')
 const { join } = require('path')
 const pathMatch = require('path-match')
 const route = pathMatch()
-const pathToRegexp = require('path-to-regexp')
 const url = require('url')
+var XRegExp = require('xregexp');
+const {inspect} = require('util')
 
 function _defaultRoutes(additionRoutes) {
   return {
@@ -13,37 +14,48 @@ function _defaultRoutes(additionRoutes) {
     },
   }
 }
-
+function name(str,replaceWhat,replaceTo){
+  replaceWhat = replaceWhat.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+  var re = new RegExp(replaceWhat, 'g');
+  return str.replace(re,replaceTo);
+}
 const _nextRoutes = require.main.require('./now.dev.json');
 function routesMiddleware({server, app}, defaultRoutes = _defaultRoutes, nextRoutes = _nextRoutes) {
   const dev = process.env.NODE_ENV !== 'production';
 
   let additionalRoutes = {}
   nextRoutes.routes.forEach(function(item) {
-    additionalRoutes[item.src] = function({app, req, res, query}) {
-      var re = pathToRegexp(item.src)
-      const result = re.exec(req.url)
-      if (result) {
-        const slices = result.slice(1, result.length)
-        let tmp = item.dest
-        for(let i = 0; i < slices.length; i++) {
-          tmp = tmp.replace(`$${i+1}`, slices[i])
-        }
-        const t = url.parse(tmp, true)
-        const finalQuery = {...t.query, ...query}
-        app.render(req, res, t.pathname, finalQuery)
-      }
+    console.log(inspect(item))
+    additionalRoutes[item.src] = function({app, req, res, query, pattern}) {
+      const resultUrl = XRegExp.replace(req.url, pattern, item.dest)
+      const additionalParams = url.parse(resultUrl, true)
+      const pathname = item.dest.split("?")[0]
+      const finalQuery = {...additionalParams.query, ...query}
+      app.render(req, res, pathname, finalQuery)
     }
   })
+
   const handle = app.getRequestHandler();
   const routes = defaultRoutes(additionalRoutes)
   const MobileDetect = require('mobile-detect')
   server.get('*', (req, res, next) => {
     const parsedUrl = parse(req.url, true)
     const { pathname, query } = parsedUrl
-    
     const md = new MobileDetect(req.headers['user-agent']);
     const isMobile = md.mobile()
+
+    for(let item in additionalRoutes) {
+      if (additionalRoutes.hasOwnProperty(item)) {
+        const pattern = XRegExp(item)
+        let result = XRegExp.exec(req.url, pattern)
+        if (result) {
+          return additionalRoutes[item]({
+            app, req, res, next, handle, query, isMobile, join, dev, pattern
+          })          
+        }
+      }      
+    }
+    
     for (let k in routes) {
       if (routes.hasOwnProperty(k)) {
         const params = route(k)(pathname)
