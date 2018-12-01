@@ -1,6 +1,6 @@
 {
   "name": "next-routes-middleware",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "Express middleware for Next.js dynamic routes",
   "main": "index.js",
   "scripts": {
@@ -9,8 +9,12 @@
   "author": "Truong Hoang Dung (@revskill10)",
   "license": "MIT",
   "dependencies": {
-    "mobile-detect": "^1.4.3",
-    "path-match": "^1.2.4",
-    "path-to-regexp": "^2.4.0"
+    "mobile-detect": "1.4.3",
+    "path-match": "1.2.4",
+    "path-to-regexp": "2.4.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/revskill10/next-template.git"
   }
 }

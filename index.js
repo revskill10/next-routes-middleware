@@ -8,8 +8,8 @@ const url = require('url')
 function _defaultRoutes(additionRoutes) {
   return {
     ...additionRoutes,
-    '/*': function({handle, req, res, parsedUrl}) {
-      handle(req, res, parsedUrl)
+    '*': function({handle, req, res}) {
+      handle(req, res)
     },
   }
 }
