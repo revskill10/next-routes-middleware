@@ -19,7 +19,7 @@ function defaultRoutes(additionRoutes) {
       const filePath = join(__dirname, '../static', 'favicon.ico')
       app.serveStatic(req, res, filePath)
     },
-    ...additionRoutes
+    ...additionRoutes,
     '/*': function({handle, req, res, parsedUrl}) {
       handle(req, res, parsedUrl)
     },
