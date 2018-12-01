@@ -20,8 +20,8 @@ Step 1: Create your own `now.dev.json`:
       "dest": "/work?slug=$1" 
     },
     { 
-      "src": "/resource/(?<id>[^/]*)", 
-      "dest": "/complex?id=${id}" 
+      "src": "/resource/(?<uuid>[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}){1}", 
+      "dest": "/complex?id=${uuid}" 
     },
     { 
       "src": "/t/(?<slug>[^/]*)/(?<year>[0-9]{4})-(?<month>[0-9]{2})-(?<day>[0-9]{2})", 

@@ -22,7 +22,7 @@ const Nav = () => (
         </Link>
       </li>
       <li>
-        <Link prefetch as="/resource/test" href="/complex?id=test">
+        <Link prefetch as="/resource/202eb9d7-feb3-407c-922e-e749159cb3ec" href="/complex?id=202eb9d7-feb3-407c-922e-e749159cb3ec">
           <a>Resource</a>
         </Link>
       </li>
