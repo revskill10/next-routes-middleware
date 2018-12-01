@@ -43,3 +43,54 @@ app.prepare().then(() => {
 })
 
 ```
+
+## Customization and Overriding Routes
+
+Suppose you want to do something else beyond rendering, you can provide custom routes handler like this
+
+`customRoutes.js`
+```js
+
+function customRoutes(nextRoutes) {
+  return {
+    '/service-worker.js': function({app, req, res, join, dev}) {
+      const filePath = dev ? join(__dirname, '../static', 'service-worker.dev.js'): join(__dirname, '../static', 'service-worker.js')
+      app.serveStatic(req, res, filePath)
+    },
+    '/favicon.ico': function({app, req, res, join}) {
+      const filePath = join(__dirname, '../static', 'favicon.ico')
+      app.serveStatic(req, res, filePath)
+    },
+    '/static/wasm/*': function({app, req, res, next, handle, pathname}) {
+      res.setHeader('Content-Type', 'application/wasm')
+      handle(req, res, parsedUrl)
+    },
+    
+    '/w/:slug': function({app, req, res, query, params}) {
+      const {slug} = params
+      console.log(`hello ${slug}`)
+      app.render(req, res, '/work', {...params, ...query})
+    },    
+    '/': function({app, req, res, isMobile, query}) {
+      if (!isMobile) {
+        app.render(req, res, '/index', {phone: false, ...query })
+      } else {
+        app.render(req, res, '/index', {phone: true, ...query})
+      }
+    },    
+    ...nextRoutes,
+    '/*': function({handle, req, res, parsedUrl}) {
+      handle(req, res, parsedUrl)
+    },
+  }
+}
+
+module.exports = customRoutes
+```
+
+Then use in your custom `server.js`
+
+```js
+const customRoutes = require('./customRoutes)
+routesMiddleware({server, app}, customRoutes)
+```
