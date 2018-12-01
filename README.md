@@ -91,6 +91,7 @@ module.exports = customRoutes
 Then use in your custom `server.js`
 
 ```js
-const customRoutes = require('./customRoutes)
+const customRoutes = require('./customRoutes')
 routesMiddleware({server, app}, customRoutes)
 ```
+
