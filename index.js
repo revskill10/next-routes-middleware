@@ -4,8 +4,9 @@ const pathMatch = require('path-match')
 const route = pathMatch()
 const pathToRegexp = require('path-to-regexp')
 const url = require('url')
+const _defaultRoutes = require('./defaultRoutes')
 
-function routesMiddleware({server, handle, app, dev}, {defaultRoutes, nextRoutes}) {
+function routesMiddleware({server, handle, app, dev}, {defaultRoutes = _defaultRoutes, nextRoutes}) {
   let additionalRoutes = {}
   nextRoutes.routes.forEach(function(item) {
     additionalRoutes[item.src] = function({app, req, res, query}) {
