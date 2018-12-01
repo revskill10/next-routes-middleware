@@ -53,10 +53,11 @@ const app = next({ dev });
 const handle = app.getRequestHandler();
 const routesMiddleware = require('next-routes-middleware')
 const defaultRoutes = require('./defaultRoutes')
-const nowRoutes = require('./now.dev.json')
+const nextRoutes = require('./now.dev.json')
 
 app.prepare().then(async () => {
-  routesMiddleware({server, handle, app, dev}, {defaultRoutes, nowRoutes})
+  const server = <your http server>
+  routesMiddleware({server, handle, app, dev}, {defaultRoutes, nextRoutes})
   ...
 }
 ```
