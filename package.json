@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Truong Hoang Dung (@revskill10)",
   "license": "MIT",
   "dependencies": {
     "mobile-detect": "^1.4.3",
