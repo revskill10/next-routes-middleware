@@ -4,9 +4,18 @@ const pathMatch = require('path-match')
 const route = pathMatch()
 const pathToRegexp = require('path-to-regexp')
 const url = require('url')
-const _defaultRoutes = require('./defaultRoutes')
 
-function routesMiddleware({server, handle, app, dev}, {defaultRoutes = _defaultRoutes, nextRoutes}) {
+function _defaultRoutes(additionRoutes) {
+  return {
+    ...additionRoutes,
+    '/*': function({handle, req, res, parsedUrl}) {
+      handle(req, res, parsedUrl)
+    },
+  }
+}
+
+const _nextRoutes = require.main.require('./now.dev.json');
+function routesMiddleware({server, app, dev}, defaultRoutes = _defaultRoutes, nextRoutes = _nextRoutes) {
   let additionalRoutes = {}
   nextRoutes.routes.forEach(function(item) {
     additionalRoutes[item.src] = function({app, req, res, query}) {
@@ -24,6 +33,7 @@ function routesMiddleware({server, handle, app, dev}, {defaultRoutes = _defaultR
       }
     }
   })
+  const handle = app.getRequestHandler();
   const routes = defaultRoutes(additionalRoutes)
   const MobileDetect = require('mobile-detect')
   server.get('*', (req, res, next) => {
