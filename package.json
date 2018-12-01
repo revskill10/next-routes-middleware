@@ -1,0 +1,16 @@
+{
+  "name": "next-routes-middleware",
+  "version": "1.0.0",
+  "description": "Express middleware for Next.js dynamic routes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "mobile-detect": "^1.4.3",
+    "path-match": "^1.2.4",
+    "path-to-regexp": "^2.4.0"
+  }
+}
