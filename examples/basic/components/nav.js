@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
-import mkLink from '../../../get-client-link'
+import mkLink from 'next-routes-middleware/get-client-link'
 import config from '../now.dev.json'
 const getClientLink = mkLink(config)
 
@@ -43,9 +43,7 @@ const NavBar = () => (
   <Nav>
     <Ul>
       <Li>
-        <StyledLink prefetch passHref href="/">
-          Home
-        </StyledLink>
+        <StyledLink prefetch passHref href="/">Home</StyledLink>
       </Li>
       <Li>
         <StyledLink href='/w/test' passHref>Work</StyledLink>

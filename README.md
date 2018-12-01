@@ -114,7 +114,7 @@ routesMiddleware({server, app}, customRoutes)
 ```js
 import Link from 'next/link'
 import styled from 'styled-components'
-import mkLink from 'next-routes/middleware/get-client-link'
+import mkLink from 'next-routes-middleware/get-client-link'
 import config from '../now.dev.json'
 const getClientLink = mkLink(config)
 
