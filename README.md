@@ -56,6 +56,7 @@ const defaultRoutes = require('./defaultRoutes')
 const nowRoutes = require('./now.dev.json')
 
 app.prepare().then(async () => {
+  const server = <your http server>
   routesMiddleware({server, handle, app, dev}, {defaultRoutes, nowRoutes})
   ...
 }
