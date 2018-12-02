@@ -2,7 +2,7 @@
 
 [![npm version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=2.0.0&x2=0)](https://www.npmjs.com/package/next-routes-middleware)
 
-Extensible, customizable Next.JS routes middleware
+Universal, Extensible, customizable Next.JS routes middleware
 
 ## Installation
 
