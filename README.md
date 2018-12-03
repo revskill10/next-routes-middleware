@@ -120,9 +120,11 @@ const getClientLink = mkLink(config)
 
 const NextLink = ({href, className, children, ...rest}) => {
   const as = getClientLink(href)
-  return <Link href={as} as={href} {...rest}>
-    <a className={className} href={as}>{children}</a>
-  </Link>
+  return (
+    <Link href={as} as={href} {...rest}>
+      <a className={className} href={as}>{children}</a>
+    </Link>
+  )
 }
 
 const StyledLink = styled(NextLink)`
