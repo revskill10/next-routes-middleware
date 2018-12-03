@@ -63,6 +63,8 @@ Step 1: Create your own `now.dev.json`:
 
 ```
 
+*Note*: You can skip step 2 by using [now-dev-cli](https://github.com/revskill10/now-dev-cli), which will run this custom server for you.
+
 Step 2: Using `next-routes-middleware` in your custom `server.js`
 
 ```js
