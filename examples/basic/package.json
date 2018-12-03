@@ -24,5 +24,8 @@
       "lost": {},
       "postcss-nested": {}
     }
+  },
+  "bin": {
+    "now-dev": "../../cli.js"
   }
 }

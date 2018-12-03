@@ -1,0 +1,39 @@
+{
+  "builds": [
+    {
+      "src": "next.config.js",
+      "use": "@now/next"
+    },
+    {
+      "src": "static",
+      "use": "@now/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/favicon.ico",
+      "dest": "static/favicon.ico",
+      "method": "GET"
+    },
+    {
+      "src": "/w/(?<first>.*)",
+      "dest": "/work?slug=${first}",
+      "method": "GET"
+    },
+    {
+      "src": "/resource/(?<uuid>[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}){1}",
+      "dest": "/complex?id=${uuid}",
+      "method": "GET"
+    },
+    {
+      "src": "/t/(?<slug>[^/]*)/(?<year>[0-9]{4})-(?<month>[0-9]{2})-(?<day>[0-9]{2})",
+      "dest": "/more_complex?day=${day}&month=${month}&year=${year}&slug=${slug}",
+      "method": "GET"
+    },
+    {
+      "src": "/",
+      "dest": "/index",
+      "method": "GET"
+    }
+  ]
+}
