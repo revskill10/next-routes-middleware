@@ -10,6 +10,13 @@ Universal, Extensible, customizable Next.JS routes middleware
 npm i --save next-routes-middleware
 ```
 
+## Features
+
+- Replicate `next.js` for Now V2 config to develop locally.
+- Support named regular expressions used in `routes`.
+- Allow custom routes handling with all Express.js http methods.
+- Client-side routing
+
 ## Usage
 
 Step 1: Create your own `now.dev.json`:
