@@ -1,6 +1,6 @@
 {
   "name": "next-routes-middleware",
-  "version": "3.0.1",
+  "version": "3.1.1",
   "description": "Express middleware for Next.js dynamic routes",
   "main": "index.js",
   "scripts": {
@@ -17,5 +17,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/revskill10/next-routes-middleware.git"
+  },
+  "bin": {
+    "now-dev": "./cli.js"
   }
 }

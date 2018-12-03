@@ -6,6 +6,7 @@ const url = require('url')
 var XRegExp = require('xregexp');
 const stringInject = require('stringinject').default
 const walkSync = require('./walk-sync')
+const fs = require('fs')
 
 function _defaultRoutes(additionRoutes) {
   return {
@@ -16,11 +17,10 @@ function _defaultRoutes(additionRoutes) {
   }
 }
 
-const _nextRoutes = require.main.require('./now.dev.json');
-async function routesMiddleware({server, app}, defaultRoutes = _defaultRoutes, nextRoutes = _nextRoutes) {
+async function routesMiddleware({server, app, config}, defaultRoutes = _defaultRoutes) {
   const dev = process.env.NODE_ENV !== 'production';
-  const patterns = nextRoutes.patterns
-  const builders = nextRoutes.builds.map(function(item) {
+  const patterns = config.patterns
+  const builders = config.builds.map(function(item) {
     let dir = dirname(item.src)
     let newDir = dir
     if (item.use === '@now/next') {
@@ -55,10 +55,20 @@ async function routesMiddleware({server, app}, defaultRoutes = _defaultRoutes, n
     return tmp
   }
 
-  const modifiedRoutes = nextRoutes.routes.map(function(item) {
+  let compiled = {
+    builds: config.builds,
+    routes: []
+  }
+
+  const modifiedRoutes = config.routes.map(function(item) {
     const tmpSrc = stringInject(item.src, patterns).replace(/\$/g, "")
     const tmpMethod = item.method ? item.method : 'GET'
     const builder = findBuilder(item.dest)
+    compiled.routes.push({
+      src: tmpSrc,
+      dest: item.dest,
+      method: tmpMethod,
+    })
     return {
       src: tmpSrc,
       dest: item.dest,
@@ -66,6 +76,16 @@ async function routesMiddleware({server, app}, defaultRoutes = _defaultRoutes, n
       builder,
     }
   })
+
+  fs.writeFile(
+    'now.compiled.json',
+    JSON.stringify(compiled, null, 2),
+    function (err) {
+        if (err) {
+            console.error('Crap happens');
+        }
+    }
+  );
 
 
   let additionalRoutes = {}

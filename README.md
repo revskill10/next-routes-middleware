@@ -1,6 +1,6 @@
 ## Next Routes Middleware
 
-[![npm version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=3.0.1&x2=0)](https://www.npmjs.com/package/next-routes-middleware)
+[![npm version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=3.1.1&x2=0)](https://www.npmjs.com/package/next-routes-middleware)
 
 Universal, Extensible, customizable Next.JS routes middleware
 
@@ -16,6 +16,7 @@ npm i --save next-routes-middleware
 - Support named regular expressions used in `routes`.
 - Allow custom routes handling with all Express.js http methods.
 - Client-side routing
+- Compiling to Now V2 compatible JSON config
 
 ## Usage
 
@@ -69,17 +70,18 @@ const express = require('express')
 const next = require('next');
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
-const routesMiddleware = require('next-routes-middleware')
+const routesMiddleware = require('../../index')
 const port = parseInt(process.env.PORT, 10) || 3000
-
+const config = require('./now.dev.json')
 app.prepare().then(() => {
   const server = express()
-  routesMiddleware({server, app})
+  routesMiddleware({server, app, config})
   server.listen(port, (err) => {
     if (err) throw err
     console.log(`> Ready on http://localhost:${port}`)
   })
 })
+
 
 ```
 
