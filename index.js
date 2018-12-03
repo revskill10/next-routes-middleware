@@ -62,17 +62,17 @@ async function routesMiddleware({server, app, config}, defaultRoutes = _defaultR
 
   const modifiedRoutes = config.routes.map(function(item) {
     const tmpSrc = stringInject(item.src, patterns).replace(/\$/g, "")
-    const tmpMethod = item.method ? item.method : 'GET'
+    const tmpMethods = item.methods ? item.methods : ['GET']
     const builder = findBuilder(item.dest)
     compiled.routes.push({
       src: tmpSrc,
       dest: item.dest,
-      method: tmpMethod,
+      methods: tmpMethods,
     })
     return {
       src: tmpSrc,
       dest: item.dest,
-      method: tmpMethod,
+      methods: tmpMethods,
       builder,
     }
   })
@@ -81,24 +81,23 @@ async function routesMiddleware({server, app, config}, defaultRoutes = _defaultR
     'now.compiled.json',
     JSON.stringify(compiled, null, 2),
     function (err) {
-        if (err) {
-            console.error('Crap happens');
-        }
+      if (err) {
+          console.error('Crap happens');
+      }
     }
   );
 
-
   let additionalRoutes = {}
   modifiedRoutes.forEach(function(item) {
-    additionalRoutes[item.src] = function({req, res, query, pattern, next, method}) {
+    additionalRoutes[item.src] = function({req, res, query, pattern, next, methods}) {
       if (item.builder) {
-        if (item.builder.builder.use === '@now/next' && method === item.method) {    
+        if (item.builder.builder.use === '@now/next'  && methods.includes('GET')) {    
           const resultUrl = XRegExp.replace(req.url, pattern, item.dest)
           const additionalParams = url.parse(resultUrl, true)
           const pathname = item.dest.split('?')[0]
           const finalQuery = {...additionalParams.query, ...query}
           app.render(req, res, pathname, finalQuery)
-        } else if (item.builder.builder.use === '@now/static' && method === 'GET') {
+        } else if (item.builder.builder.use === '@now/static' && methods.includes('GET')) {
           const filePath = item.dest
           app.serveStatic(req, res, filePath)
         }
@@ -116,7 +115,7 @@ async function routesMiddleware({server, app, config}, defaultRoutes = _defaultR
     const { pathname, query } = parsedUrl
     const md = new MobileDetect(req.headers['user-agent']);
     const isMobile = md.mobile()
-    const method = req.method
+    const methods = [req.method]
 
     for(let item in additionalRoutes) {
       if (additionalRoutes.hasOwnProperty(item)) {
@@ -124,7 +123,7 @@ async function routesMiddleware({server, app, config}, defaultRoutes = _defaultR
         let result = XRegExp.exec(req.url, pattern)
         if (result) {
           return additionalRoutes[item]({
-            req, res, next, handle, query, isMobile, join, dev, pattern, method
+            req, res, next, handle, query, isMobile, join, dev, pattern, methods
           })          
         }
       }      
@@ -134,7 +133,7 @@ async function routesMiddleware({server, app, config}, defaultRoutes = _defaultR
       if (routes.hasOwnProperty(k)) {
         const params = route(k)(pathname)
         if (params) {
-          return routes[k]({app, req, res, next, handle, query, pathname, isMobile, join, params, dev, method})
+          return routes[k]({app, req, res, next, handle, query, pathname, isMobile, join, params, dev, methods})
         }
       }
     }
