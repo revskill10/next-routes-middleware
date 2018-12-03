@@ -2,7 +2,7 @@
 
 [![npm version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=3.0.0&x2=0)](https://www.npmjs.com/package/next-routes-middleware)
 
-Extensible, customizable Next.JS routes middleware
+Universal, Extensible, customizable Next.JS routes middleware
 
 ## Installation
 
@@ -76,6 +76,29 @@ app.prepare().then(() => {
 
 ```
 
+Step 3: Using in `pages/more_complex.js`
+
+```js
+import {withRouter} from 'next/router'
+import Nav from '../components/nav'
+const Page = ({router}) => {
+  const {
+    query
+  } = router
+
+  const {day, month, year, slug} = query
+  return (
+    <>
+    <Nav />
+    <div>Slug is {slug}</div>
+    <div>You requested {year}-{month}-{day}</div>
+    </>
+  )
+}
+
+export default withRouter(Page)
+```
+
 ## Customization and Overriding Routes
 
 Suppose you want to do something else beyond rendering, you can provide custom routes handler like this
@@ -133,9 +156,11 @@ const getClientLink = mkLink(config)
 
 const NextLink = ({href, className, children, ...rest}) => {
   const as = getClientLink(href)
-  return <Link href={as} as={href} {...rest}>
-    <a className={className} href={as}>{children}</a>
-  </Link>
+  return (
+    <Link href={as} as={href} {...rest}>
+      <a className={className} href={as}>{children}</a>
+    </Link>
+  )
 }
 
 const StyledLink = styled(NextLink)`
