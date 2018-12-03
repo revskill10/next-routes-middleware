@@ -2,6 +2,8 @@ import React from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import mkLink from 'next-routes-middleware/get-client-link'
+import {FormattedMessage} from 'react-intl'
+import LanguageSwitcher from './language-switcher'
 import config from '../now.dev.json'
 const getClientLink = mkLink(config)
 
@@ -43,7 +45,17 @@ const NavBar = () => (
   <Nav>
     <Ul>
       <Li>
-        <StyledLink prefetch passHref href="/">Home</StyledLink>
+        <StyledLink prefetch passHref href="/">
+          <FormattedMessage id='nav.home' defaultMessage='Home' />
+        </StyledLink>
+      </Li>
+      <Li>
+        <StyledLink prefetch passHref href="/about">
+          <FormattedMessage id='nav.about' defaultMessage='About' />
+        </StyledLink>
+      </Li>
+      <Li>
+        <LanguageSwitcher />
       </Li>
       <Li>
         <StyledLink href='/w/test' passHref>Work</StyledLink>

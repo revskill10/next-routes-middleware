@@ -39,9 +39,10 @@ const resolvers = {
 
 const PORT = 4000;
 const app = express();
+const path = '/'
 const server = new ApolloServer({ typeDefs, resolvers, introspection: true, playground: true });
 
-server.applyMiddleware({app})
+server.applyMiddleware({app, path})
 
 const httpServer = http.createServer(app);
 server.installSubscriptionHandlers(httpServer);

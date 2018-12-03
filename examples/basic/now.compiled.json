@@ -18,6 +18,13 @@
       ]
     },
     {
+      "src": "/about",
+      "dest": "basic/about",
+      "methods": [
+        "GET"
+      ]
+    },
+    {
       "src": "/w/(?<first>.*)",
       "dest": "basic/work?slug=$first",
       "methods": [

@@ -3,7 +3,7 @@
   "builds": [
       { "src": "basic/next.config.js", "use": "@now/next" },
       { "src": "api/index.js", "use": "@now/node-server" },
-      { "src": "basic/static/*", "use": "@now/static"},
+      { "src": "basic/static/**", "use": "@now/static"},
       { "src": "posts/*.md", "use": "@now/md" }
   ],
   "routes": [    
@@ -13,6 +13,13 @@
     },
     {
       "src": "/_next/static/(.*)", "dest": "/basic/_next/static/$1"
+    },
+    {
+      "src": "/about",
+      "dest": "basic/about",
+      "methods": [
+        "GET"
+      ]
     },
     {
       "src": "/w/(?<first>.*)",
@@ -34,7 +41,7 @@
       "methods": [
         "GET"
       ]
-    },    
+    },
     {
       "src": "/",
       "dest": "basic/index",
@@ -43,6 +50,6 @@
       ]
     },
     { "src": "/posts/(.*)", "dest": "posts/$1"},
-    { "src": "/.*", "dest": "api/index.js" }
+    { "src": "/api/.*", "dest": "api/index.js" }
   ]
 }

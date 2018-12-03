@@ -20,6 +20,10 @@
       "src": "/favicon.ico",
       "dest": "static/favicon.ico"
     },
+    {
+      "src": "/about",
+      "dest": "/about"
+    },
     { 
       "src": "/w/${first}", 
       "dest": "/work?slug=${first}" 

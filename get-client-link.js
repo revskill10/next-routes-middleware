@@ -4,7 +4,10 @@ const XRegExp = require('xregexp')
 function mkLink(config) {
   const patterns = config.patterns
   const clientRoutes = config.routes.map(function(item) {
-    const tmpSrc = stringInject(item.src, patterns).replace(/\$/g, "")
+    let tmpSrc = item.src
+    if (item.src.includes("${")) {
+      tmpSrc = stringInject(item.src, patterns).replace(/\$/g, "")
+    }
     return {
       src: tmpSrc,
       dest: item.dest,
