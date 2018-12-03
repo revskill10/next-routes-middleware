@@ -2,7 +2,7 @@ const express = require('express')
 const next = require('next');
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
-const routesMiddleware = require('next-routes-middleware')
+const routesMiddleware = require('../../index')
 const port = parseInt(process.env.PORT, 10) || 3000
 
 app.prepare().then(() => {

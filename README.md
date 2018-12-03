@@ -14,7 +14,7 @@ npm i --save next-routes-middleware
 
 Step 1: Create your own `now.dev.json`:
 
-```json
+```js
 {
   "patterns": {
     "first": "(?<first>.*)",
@@ -24,7 +24,19 @@ Step 1: Create your own `now.dev.json`:
     "month":"(?<month>[0-9]{2})",
     "day":"(?<day>[0-9]{2})"
   },
+  "builds": [
+    {
+      "src": "next.config.js", "use": "@now/next"
+    },
+    {
+      "src": "static", "use": "@now/static"
+    }
+  ],
   "routes": [
+    {
+      "src": "/favicon.ico",
+      "dest": "static/favicon.ico"
+    },
     { 
       "src": "/w/${first}", 
       "dest": "/work?slug=${first}" 
@@ -40,6 +52,7 @@ Step 1: Create your own `now.dev.json`:
     { "src": "/", "dest": "/index" }
   ]
 }
+
 ```
 
 Step 2: Using `next-routes-middleware` in your custom `server.js`
