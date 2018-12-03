@@ -63,6 +63,29 @@ app.prepare().then(() => {
 
 ```
 
+Step 3: Using in `pages/more_complex.js`
+
+```js
+import {withRouter} from 'next/router'
+import Nav from '../components/nav'
+const Page = ({router}) => {
+  const {
+    query
+  } = router
+
+  const {day, month, year, slug} = query
+  return (
+    <>
+    <Nav />
+    <div>Slug is {slug}</div>
+    <div>You requested {year}-{month}-{day}</div>
+    </>
+  )
+}
+
+export default withRouter(Page)
+```
+
 ## Customization and Overriding Routes
 
 Suppose you want to do something else beyond rendering, you can provide custom routes handler like this
