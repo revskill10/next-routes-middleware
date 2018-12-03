@@ -7,7 +7,8 @@ const port = parseInt(process.env.PORT, 10) || 3000
 const config = require('./now.dev.json')
 app.prepare().then(() => {
   const server = express()
-  routesMiddleware({server, app, config})
+  const prefix = ""
+  routesMiddleware({server, app, config, prefix})
   server.listen(port, (err) => {
     if (err) throw err
     console.log(`> Ready on http://localhost:${port}`)

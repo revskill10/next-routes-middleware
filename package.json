@@ -1,6 +1,6 @@
 {
   "name": "next-routes-middleware",
-  "version": "3.2.2",
+  "version": "3.2.3",
   "description": "Express middleware for Next.js dynamic routes",
   "main": "index.js",
   "scripts": {
@@ -9,6 +9,9 @@
   "author": "Truong Hoang Dung (@revskill10)",
   "license": "MIT",
   "dependencies": {
+    "apollo-server-express": "^2.2.5",
+    "express": "^4.16.4",
+    "graphql": "^14.0.2",
     "mobile-detect": "1.4.3",
     "path-match": "1.2.4",
     "stringinject": "^2.1.1",

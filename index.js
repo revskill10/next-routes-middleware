@@ -22,7 +22,7 @@ function _defaultRoutes(additionRoutes) {
   }
 }
 
-async function routesMiddleware({server, app, config}, defaultRoutes = _defaultRoutes) {
+async function routesMiddleware({server, app, config, prefix = ""}, defaultRoutes = _defaultRoutes) {
   const dev = process.env.NODE_ENV !== 'production';
   const patterns = config.patterns
   const builders = config.builds.map(function(item) {
@@ -74,7 +74,7 @@ async function routesMiddleware({server, app, config}, defaultRoutes = _defaultR
     compiledDest2 = name(compiledDest1, "{", "")
     compiled.routes.push({
       src: tmpSrc,
-      dest: compiledDest2,
+      dest: `${prefix}${compiledDest2}`,
       methods: tmpMethods,
     })
     return {

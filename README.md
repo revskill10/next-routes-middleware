@@ -1,6 +1,6 @@
 ## Next Routes Middleware
 
-[![npm version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=3.2.2&x2=0)](https://www.npmjs.com/package/next-routes-middleware)
+[![npm version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=3.2.3&x2=0)](https://www.npmjs.com/package/next-routes-middleware)
 
 Universal, Extensible, customizable Next.JS routes middleware
 
@@ -77,7 +77,8 @@ const port = parseInt(process.env.PORT, 10) || 3000
 const config = require('./now.dev.json')
 app.prepare().then(() => {
   const server = express()
-  routesMiddleware({server, app, config})
+  const prefix = ""
+  routesMiddleware({server, app, config, prefix})
   server.listen(port, (err) => {
     if (err) throw err
     console.log(`> Ready on http://localhost:${port}`)
