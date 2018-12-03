@@ -1,4 +1,8 @@
 {
+  "version": 2,
+  "name": "next-routes-middleware",
+  "public": true,
+  "alias": "next-routes-middleware",
   "builds": [
     {
       "src": "next.config.js",

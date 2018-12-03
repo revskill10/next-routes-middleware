@@ -8,6 +8,11 @@ const stringInject = require('stringinject').default
 const walkSync = require('./walk-sync')
 const fs = require('fs')
 
+function name(str,replaceWhat,replaceTo){
+  var re = new RegExp(replaceWhat, 'g');
+  return str.replace(re,replaceTo);
+}
+
 function _defaultRoutes(additionRoutes) {
   return {
     ...additionRoutes,
@@ -64,9 +69,12 @@ async function routesMiddleware({server, app, config}, defaultRoutes = _defaultR
     const tmpSrc = stringInject(item.src, patterns).replace(/\$/g, "")
     const tmpMethods = item.methods ? item.methods : ['GET']
     const builder = findBuilder(item.dest)
+    let compiledDest = item.dest
+    compiledDest1 = name(compiledDest, "}", "")
+    compiledDest2 = name(compiledDest1, "{", "")
     compiled.routes.push({
       src: tmpSrc,
-      dest: item.dest,
+      dest: compiledDest2,
       methods: tmpMethods,
     })
     return {
