@@ -257,7 +257,7 @@ This is the compiled Now config file
 import Link from 'next/link'
 import styled from 'styled-components'
 import mkLink from 'next-routes-middleware/get-client-link'
-import config from '../now.dev.json'
+import config from '../now.config.js'
 const getClientLink = mkLink(config)
 
 const NextLink = ({href, className, children, ...rest}) => {
