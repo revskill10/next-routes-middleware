@@ -1,4 +1,16 @@
 {
+  "version": 2,
+  "name": "next-routes-middleware",
+  "public": true,
+  "alias": "next-routes-middleware",
+  "patterns": {
+    "first": "(?<first>.*)",
+    "uuid": "(?<uuid>[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}){1}",
+    "slug": "(?<slug>[^/]*)",
+    "year": "(?<year>[0-9]{4})",
+    "month": "(?<month>[0-9]{2})",
+    "day": "(?<day>[0-9]{2})"
+  },
   "builds": [
     {
       "src": "next.config.js",
@@ -12,45 +24,27 @@
   "routes": [
     {
       "src": "/favicon.ico",
-      "dest": "basicstatic/favicon.ico",
-      "methods": [
-        "GET"
-      ]
+      "dest": "static/favicon.ico"
     },
     {
       "src": "/about",
-      "dest": "basic/about",
-      "methods": [
-        "GET"
-      ]
+      "dest": "/about"
     },
     {
       "src": "/w/(?<first>.*)",
-      "dest": "basic/work?slug=$first",
-      "methods": [
-        "GET"
-      ]
+      "dest": "/work?slug=$first"
     },
     {
       "src": "/resource/(?<uuid>[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}){1}",
-      "dest": "basic/complex?id=$uuid",
-      "methods": [
-        "GET"
-      ]
+      "dest": "/complex?id=$uuid"
     },
     {
       "src": "/t/(?<slug>[^/]*)/(?<year>[0-9]{4})-(?<month>[0-9]{2})-(?<day>[0-9]{2})",
-      "dest": "basic/more_complex?day=$day&month=$month&year=$year&slug=$slug",
-      "methods": [
-        "GET"
-      ]
+      "dest": "/more_complex?day=$day&month=$month&year=$year&slug=$slug"
     },
     {
       "src": "/",
-      "dest": "basic/index",
-      "methods": [
-        "GET"
-      ]
+      "dest": "/index"
     }
   ]
 }

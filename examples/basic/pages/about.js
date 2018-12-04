@@ -1,18 +1,17 @@
 import React, {Component} from 'react'
 import {FormattedRelative} from 'react-intl'
 import Layout from '../components/layout'
-
+import {inspect} from 'util'
 class About extends Component {
-  static async getInitialProps ({req}) {
-    return {someDate: Date.now()}
-  }
+  
 
   render () {
+    const someDate = new Date()
     return (
       <Layout>
         <p>
           <FormattedRelative
-            value={this.props.someDate}
+            value={someDate}
             updateInterval={1000}
           />
         </p>

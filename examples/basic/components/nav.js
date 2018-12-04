@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import mkLink from 'next-routes-middleware/get-client-link'
 import {FormattedMessage} from 'react-intl'
 import LanguageSwitcher from './language-switcher'
-import config from '../now.dev.json'
+import config from '../now.config.js'
 const getClientLink = mkLink(config)
 
 const NextLink = ({href, className, children, ...rest}) => {

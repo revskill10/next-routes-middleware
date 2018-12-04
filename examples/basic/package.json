@@ -14,7 +14,7 @@
     "intl": "^1.2.5",
     "lost": "^8.3.0",
     "next": "latest",
-    "next-routes-middleware": "^1.0.9",
+    "next-routes-middleware": "3.2.4",
     "postcss-nested": "^4.1.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
@@ -31,8 +31,5 @@
       "lost": {},
       "postcss-nested": {}
     }
-  },
-  "bin": {
-    "now-dev": "../../cli.js"
   }
 }

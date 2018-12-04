@@ -2,17 +2,21 @@
   "version": 2,
   "builds": [
       { "src": "basic/next.config.js", "use": "@now/next" },
+      { "src": "edu/next.config.js", "use": "@now/next" },
       { "src": "api/index.js", "use": "@now/node-server" },
       { "src": "basic/static/**", "use": "@now/static"},
-      { "src": "posts/*.md", "use": "@now/md" }
+      { "src": "posts/*.md", "use": "@now/md" },
+      {
+        "src": "/basic/_next/static/(.*)", "use": "@now/static"
+      },
+      {
+        "src": "/edu/_next/static/(.*)", "use": "@now/static"
+      }
   ],
   "routes": [    
     { "src": "favicon.ico", "dest": "/basic/static/favicon.ico"},
     {
       "src": "/static/(.*)", "dest": "/basic/static/$1"
-    },
-    {
-      "src": "/_next/static/(.*)", "dest": "/basic/_next/static/$1"
     },
     {
       "src": "/about",
@@ -48,6 +52,10 @@
       "methods": [
         "GET"
       ]
+    },
+    {
+      "src": "/test",
+      "dest": "edu/index"
     },
     { "src": "/posts/(.*)", "dest": "posts/$1"},
     { "src": "/api/.*", "dest": "api/index.js" }

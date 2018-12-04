@@ -14,24 +14,24 @@ if (typeof window !== 'undefined' && window.ReactIntlLocaleData) {
 */
 export default class MyApp extends App {
   static async getInitialProps ({ Component, router, ctx }) {
+    
+
+    const { req } = ctx
+    if (req) {
+      const {initI18n} = await import('../lib/util')
+      initI18n(ctx)
+    } 
+
     let pageProps = {}
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx)
     }
-
-    const { req } = ctx
-    if (req) {
-      const {initI18n} = require('../lib/util')
-      initI18n(ctx)
-    } 
 
     if (req) {
       const { locale, messages } = ctx
 
       // Get the `locale` and `messages` from the request object on the server.
       // In the browser, use the same values that the server serialized.
-      
-      
 
       return { pageProps, locale, messages }
     } else {

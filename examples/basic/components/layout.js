@@ -1,6 +1,8 @@
 import React from 'react'
 import {defineMessages, injectIntl} from 'react-intl'
 import Head from 'next/head'
+//import dynamic from 'next/dynamic'
+//const Nav = dynamic(import('./nav'))
 import Nav from './nav'
 
 const messages = defineMessages({
@@ -17,9 +19,7 @@ export default injectIntl(({intl, title, children}) => (
       <title>{title || intl.formatMessage(messages.title)}</title>
     </Head>
 
-    <header>
-      <Nav />
-    </header>
+    <Nav />
 
     {children}
 

@@ -1,11 +1,9 @@
 const { parse } = require('url')
-const { join, dirname } = require('path')
+const { join } = require('path')
 const pathMatch = require('path-match')
 const route = pathMatch()
 const url = require('url')
 var XRegExp = require('xregexp');
-const stringInject = require('stringinject').default
-const walkSync = require('./walk-sync')
 const fs = require('fs')
 
 function name(str,replaceWhat,replaceTo){
@@ -24,66 +22,17 @@ function _defaultRoutes(additionRoutes) {
 
 async function routesMiddleware({server, app, config, prefix = ""}, defaultRoutes = _defaultRoutes) {
   const dev = process.env.NODE_ENV !== 'production';
-  const patterns = config.patterns
-  const builders = config.builds.map(function(item) {
-    let dir = dirname(item.src)
-    let newDir = dir
-    if (item.use === '@now/next') {
-      newDir = `${dir}/pages`
-    } else if (item.use === '@now/static') {
-      newDir = `${dir}/${item.src}`
-    }
-    const files = walkSync(newDir).map(function(it) { return it.file })
-    return {
-      ...item,
-      files,
-    }
-  })
   
-  function findBuilder(dest) {
-    let tmp = null
-    for(let i = 0; i < builders.length; i++) {
-      const k = builders[i]
-      if (k.use === '@now/next') {
-        const pathdir = `pages${dest.split('?')[0]}.js`
-        if (k.files.includes(pathdir)) {
-          tmp = { builder: k, dirname: pathdir }
-          break
-        }
-      } else if (k.use === '@now/static') {
-        if (k.files.includes(dest)) {
-          tmp = { builder: k, dirname: dest }
-          break
-        }
-      }
-    }
-    return tmp
-  }
-
   let compiled = {
+    ...config,
     builds: config.builds,
-    routes: []
+    routes: config.routes.map(function(item) {
+      return {
+        src: item.src,
+        dest: name(name(item.dest, "\\${", "$"), "}", ""),
+      }
+    }),
   }
-
-  const modifiedRoutes = config.routes.map(function(item) {
-    const tmpSrc = stringInject(item.src, patterns).replace(/\$/g, "")
-    const tmpMethods = item.methods ? item.methods : ['GET']
-    const builder = findBuilder(item.dest)
-    let compiledDest = item.dest
-    compiledDest1 = name(compiledDest, "}", "")
-    compiledDest2 = name(compiledDest1, "{", "")
-    compiled.routes.push({
-      src: tmpSrc,
-      dest: `${prefix}${compiledDest2}`,
-      methods: tmpMethods,
-    })
-    return {
-      src: tmpSrc,
-      dest: item.dest,
-      methods: tmpMethods,
-      builder,
-    }
-  })
 
   fs.writeFile(
     'now.compiled.json',
@@ -96,16 +45,16 @@ async function routesMiddleware({server, app, config, prefix = ""}, defaultRoute
   );
 
   let additionalRoutes = {}
-  modifiedRoutes.forEach(function(item) {
+  config.routes.forEach(function(item) {
     additionalRoutes[item.src] = function({req, res, query, pattern, next, methods}) {
-      if (item.builder) {
-        if (item.builder.builder.use === '@now/next'  && methods.includes('GET')) {    
+      if (item.build) {
+        if (item.build === '@now/next') {    
           const resultUrl = XRegExp.replace(req.url, pattern, item.dest)
           const additionalParams = url.parse(resultUrl, true)
           const pathname = item.dest.split('?')[0]
           const finalQuery = {...additionalParams.query, ...query}
           app.render(req, res, pathname, finalQuery)
-        } else if (item.builder.builder.use === '@now/static' && methods.includes('GET')) {
+        } else if (item.build === '@now/static') {
           const filePath = item.dest
           app.serveStatic(req, res, filePath)
         }

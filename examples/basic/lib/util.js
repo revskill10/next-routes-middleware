@@ -28,15 +28,26 @@ const getLocaleDataScript = (locale) => {
 // We need to load and expose the translations on the request for the user's
 // locale. These will only be used in production, in dev the `defaultMessage` in
 // each message description in the source code will be used.
+function getCookie(req, name) {
+  var v = req.headers.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+  return v ? v[2] : null;
+}
 const getMessages = (locale) => {
   return require(`../lang/${locale}.json`)
 }
 
 function initI18n(ctx) {
-  const {req} = ctx
+  const {req, res} = ctx
   if (req) {
-    const accept = accepts(req)
-    const locale = accept.language(accept.languages(supportedLanguages)) || 'fr'
+    const defaultLocale = 'en'
+    let locale = getCookie(req, 'locale')
+    if (!locale) {
+      res.cookie('locale', defaultLocale)
+      locale = defaultLocale
+    }
+    /*const accept = accepts(req)
+    const locale = accept.language(accept.languages(supportedLanguages)) || defaultLocale
+    */
     ctx.locale = locale
     //ctx.localeDataScript = getLocaleDataScript(locale)
     ctx.messages = dev ? {} : getMessages(locale)
