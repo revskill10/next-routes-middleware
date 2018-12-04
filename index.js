@@ -27,15 +27,17 @@ async function routesMiddleware({server, app, config, prefix = ""}, defaultRoute
     ...config,
     builds: config.builds,
     routes: config.routes.map(function(item) {
+      const finalDest = name(name(item.dest, "\\${", "$"), "}", "")
       return {
         src: item.src,
-        dest: name(name(item.dest, "\\${", "$"), "}", ""),
+        dest: item.build === '@now/next' ? `${prefix}${finalDest}` : finalDest,
       }
     }),
   }
+  delete compiled.patterns
 
   fs.writeFile(
-    'now.compiled.json',
+    'now.json',
     JSON.stringify(compiled, null, 2),
     function (err) {
       if (err) {

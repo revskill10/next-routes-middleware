@@ -2,11 +2,13 @@ const IntlPolyfill = require('intl')
 Intl.NumberFormat = IntlPolyfill.NumberFormat
 Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat
 const dev = process.env.NODE_ENV !== 'production'
+/*
 const {readFileSync} = require('fs')
 const {basename} = require('path')
 const accepts = require('accepts')
 const glob = require('glob')
 const {inspect} = require('util')
+
 // Get the supported languages by looking for translations in the `lang/` dir.
 const supportedLanguages = ['en','fr']//glob.sync('../lang/*.json').map((f) => basename(f, '.json'))
 /*
@@ -25,22 +27,24 @@ const getLocaleDataScript = (locale) => {
   return tmp
 }
 */
-// We need to load and expose the translations on the request for the user's
-// locale. These will only be used in production, in dev the `defaultMessage` in
-// each message description in the source code will be used.
-function getCookie(req, name) {
-  var v = req.headers.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-  return v ? v[2] : null;
-}
+
 const getMessages = (locale) => {
   return require(`../lang/${locale}.json`)
 }
 
 function initI18n(ctx) {
   const {req, res} = ctx
+  const defaultLocale = 'en'
+  let locale = defaultLocale
   if (req) {
-    const defaultLocale = 'en'
-    let locale = getCookie(req, 'locale')
+    try {
+      var cookie = require('cookie');
+      var cookies = cookie.parse(req.headers.cookie)
+      locale = cookies.locale
+    } catch {
+      locale = defaultLocale
+    }
+    
     if (!locale) {
       res.cookie('locale', defaultLocale)
       locale = defaultLocale

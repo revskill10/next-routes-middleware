@@ -1,12 +1,12 @@
 ## Next Routes Middleware
 
-[![npm version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=3.3.0&x2=0)](https://www.npmjs.com/package/next-routes-middleware)
+[![npm version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=3.4.0&x2=0)](https://www.npmjs.com/package/next-routes-middleware)
 
 Universal Lambda Routing for Next.JS application
 
 ## Demo
 
-[Demo](https://examples-ixk1p1u2h.now.sh)
+[Demo](https://next-routes-middleware-4ari798pi.now.sh/)
 
 ## Installation
 
