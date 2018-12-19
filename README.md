@@ -111,7 +111,7 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const routesMiddleware = require('../../index')
 const port = parseInt(process.env.PORT, 10) || 3000
-const config = require('./now.dev.json')
+const config = require('./now.config.js')
 app.prepare().then(() => {
   const server = express()
   const prefix = ""
