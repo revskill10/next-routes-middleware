@@ -20,6 +20,12 @@ function _defaultRoutes(additionRoutes) {
   }
 }
 
+function matchesMethod(requestMethod, originalMethods) {
+  for(let method in originalMethods) {
+    if (requestMethod === method) return true      
+  }
+}
+
 async function routesMiddleware({server, app, config, prefix = ""}, defaultRoutes = _defaultRoutes) {
   const dev = process.env.NODE_ENV !== 'production';
   
@@ -59,6 +65,11 @@ async function routesMiddleware({server, app, config, prefix = ""}, defaultRoute
         } else if (item.build === '@now/static') {
           const filePath = item.dest
           app.serveStatic(req, res, filePath)
+        } else if (item.build === '@now/node') {
+          const pathname = item.dest.split('?')[0]
+          // if the req method matches, then return require(path)
+          if(matchesMethod(req.method, methods)) return require(pathname)
+          return next()
         }
       } else {
         return next()
