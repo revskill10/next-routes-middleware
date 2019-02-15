@@ -4,6 +4,11 @@
 
 Universal Lambda Routing for Next.JS application
 
+## Roadmap for 4.0.0
+
+- [] Integrate with existing `now.json` in `now.config.js` for better integration with existing ecosystem
+- [] Provide @now/node to replace @now/next (Next V8 provides a serverless lambda out of the box)
+
 ## Demo
 
 [Demo](https://next-routes-middleware-4ari798pi.now.sh/)
