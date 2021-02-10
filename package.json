@@ -15,7 +15,7 @@
     "mobile-detect": "1.4.4",
     "path-match": "1.2.4",
     "stringinject": "^2.1.1",
-    "xregexp": "^4.2.0"
+    "xregexp": "^5.0.0"
   },
   "repository": {
     "type": "git",
