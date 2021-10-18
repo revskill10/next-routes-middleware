@@ -9,7 +9,7 @@
   "author": "Truong Hoang Dung (@revskill10)",
   "license": "MIT",
   "dependencies": {
-    "apollo-server-express": "^2.2.5",
+    "apollo-server-express": "^3.0.0",
     "express": "^4.16.4",
     "graphql": "^15.0.0",
     "mobile-detect": "1.4.4",
