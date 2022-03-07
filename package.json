@@ -11,7 +11,7 @@
   "dependencies": {
     "apollo-server-express": "^2.2.5",
     "express": "^4.16.4",
-    "graphql": "^15.0.0",
+    "graphql": "^16.0.0",
     "mobile-detect": "1.4.4",
     "path-match": "1.2.4",
     "stringinject": "^2.1.1",
